@@ -1,0 +1,30 @@
+.my-style {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.5em;
+  color: red;
+}
+/* Add logo to bottom right */
+.remark-slide-footer .my-logo {
+  background-image: url('logo_eiee.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 100px;
+  height: 50px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+/* Remove logo from title slide */
+.remark-slide-title .my-logo {
+  display: none;
+}
+
+/* Add title banners */
+.remark-slide-title {
+  background: linear-gradient(to bottom, #01273C 0%, #01273C 33.33%, #295FA9 33.33%, #295FA9 66.66%, #fff 66.66%, #fff 100%);
+  background-size: 100% 100%;
+}
+
