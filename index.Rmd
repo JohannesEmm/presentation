@@ -14,8 +14,9 @@ output:
       titleSlideClass: [center, middle]
 ---
 
-#building PDF: 
-#renderthis::to_pdf("index.html")
+#Deployment: 
+#renderthis::to_pdf("index.html") #for PDF
+#usethis::use_github_pages(branch = "main") #to github (push the last changes to update!)
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -146,7 +147,6 @@ class: title-slide, test, center, middle
 
 1. Heating and Cooling by REN:
 
-1. Social Climate Fund 65bln. EUR
 ]
 
 --
@@ -172,12 +172,26 @@ class: title-slide, test, center, middle
 
 # Scenarios
 
+Master scenarios
+- MASTER bau
+- MASTER NDC
+- MASTER LTS
 
+ECEMF scenarios
+- ECEMF NPi
+- ECEMF NetZero
+- ECEMF ctax
+
+All WITCH17
+- Regional definition: "europe" = EU27 + Uk + Norway + Switzerland + Balkans
+- witch34 working for ctax but still WIP for caps and pledges
 
 
 ---
 
 # Emissions Target
+
+- GHG climate neutrality target for Europe
 
 ```{r out.width='100%', fig.height=7, include = T, echo = F, warning=F}
 plotly::ggplotly(p = p_emi_eu)  %>% layout(legend = list(orientation = 'h', x = 0.3, y = -0.1)) %>% config(displayModeBar = F)
@@ -186,7 +200,7 @@ plotly::ggplotly(p = p_emi_eu)  %>% layout(legend = list(orientation = 'h', x = 
 
 ---
 
-# Energy Efficiency Directive
+# Energy Efficiency Directive (EED)
 
 - Demand for Total Final/Primary Energy
 
@@ -197,7 +211,7 @@ plotly::ggplotly(p = p_en_eu) %>% layout(legend = list(orientation = 'h', x = 0.
 
 ---
 
-# Renewable Energy
+# Renewable Energy Directive (RED)
 
 - Share of Renewables in FEN and Electricity
 
@@ -208,7 +222,9 @@ plotly::ggplotly(p = p_ren_eu) %>% layout(legend = list(orientation = 'h', x = 0
 
 ---
 
-# Sectoral Renewable Shares
+# Sectoral Renewable Shares (RED)
+
+- Heating/Cooling not represented. Transportation REN share reasonable
 
 ```{r out.width='100%', fig.height=7, include = T, echo = F, warning=F}
 plotly::ggplotly(p = p_ren_dem_eu) %>% layout(legend = list(orientation = 'h', x = 0.3, y = -0.1)) %>% config(displayModeBar = F)
@@ -227,9 +243,9 @@ $$emicap_{y}=(E_{2030}-E_{NZY})\left(1-\frac{y-2030}{NZY-2030}\right)^{\alpha}$$
 --
 
 
-```{r out.width='100%', fig.height=5, include = T, echo = F, warning=F, fig.align='center'}
+```{r out.width='80%', fig.height=5, include = T, echo = F, warning=F, fig.align='center'}
 emicap <- function(y,alpha) (1-((y-2030)/20))^alpha
-df_emicap <- expand.grid(y = seq(2030, 2050), alpha=c(0.1,0.5,1,1.2,1.5,2,3)) %>% mutate(emicap=emicap(y,alpha))
+df_emicap <- expand.grid(y = seq(2030, 2050), alpha=c(0.1,0.5,1,1.25,1.5,2,3)) %>% mutate(emicap=emicap(y,alpha))
 ggplotly(ggplot(df_emicap) + geom_line(aes(y,emicap, color=alpha, group=alpha))) %>% config(displayModeBar = F)
 
 
@@ -267,8 +283,13 @@ plotly::ggplotly(p = p_alpha_welfare, tooltip = c("x", "y")) %>% layout(legend =
 
 - Overall Current Policies, NDC, and Pledges work fairly well
 - Final Energy reporting some fixes required
+  - hydrogen
+  - NEL
+  - Transportation 
+ 
 - Sectoral reporting a starting point but endogenous modelling next step
+ 
 - Net Zero transition we could say something about it
-- slighly convex shape ($\alpha=1.2-1.3$) seems reasonable
+- slighly convex shape $(\alpha=1.25)$ seems reasonable
 
 ---
